@@ -1,0 +1,5 @@
+name: 'Incident Report Form'
+type: module
+description: 'Custom form for users to notify reports on this site.'
+package: Custom
+core_version_requirement: ^10 || ^11

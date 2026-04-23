@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Incident Report Form module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function incident_report_form_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.incident_report_form':
+      $output = '<h2>' . t('Formulario de Informe de Incidentes') . '</h2>';
+      $output .= '<p>' . t('El módulo de formulario de informe de incidentes permite a los usuarios informar sobre incidentes a través de un formulario personalizado. Los administradores pueden revisar y gestionar los informes enviados.') . '</p>';
+      return $output;
+      break;
+
+    default:
+      return '';
+  }
+}
