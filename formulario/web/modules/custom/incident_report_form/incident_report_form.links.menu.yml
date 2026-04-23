@@ -1,0 +1,5 @@
+incident_report_form.report_incident:
+  title: 'Notificar Incidencia'
+  route_name: incident_report_form.report_incident
+  menu_name: main
+  weight: 0
