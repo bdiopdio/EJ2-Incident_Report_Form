@@ -1,0 +1,7 @@
+incident_report_form.report_incident:
+  path: '/form/incident-report-form/report-incident'
+  defaults:
+    _title: 'Incident Report'
+    _form: 'Drupal\incident_report_form\Form\IncidentReportForm'
+  requirements:
+    _permission: 'access content'
