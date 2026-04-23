@@ -6,6 +6,11 @@ namespace Drupal\incident_report_form\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use \Drupal\user\Entity\User;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Database\Database;
+use Drupal\Core\Database\DatabaseException;
+use Drupal\Core\Database\DatabaseConnectionRefusedException;
 
 /**
  * Provides a Incident report form form.
@@ -48,11 +53,11 @@ final class IncidentReportForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Prioridad'),
       '#options' => [
-        'Urgente' => '1',
-        'Alta' => '2',
-        'Media' => '3',
-        'Normal' => '4',
-        'Baja' => '5',
+        '1' => '1 - Urgente',
+        '2' => '2 - Alta',
+        '3' => '3 - Media',
+        '4' => '4 - Normal',
+        '5' => '5 - Baja',
       ],
     ];
 
@@ -122,7 +127,43 @@ final class IncidentReportForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->messenger()->addStatus($this->t('Gracias por reportar la incidencia.'));
+    $user = User::load(\Drupal::currentUser()->id());
+    $uuid = $user->uuid();
+
+    $creation_datetime = new DrupalDateTime('now'); // current datetime
+
+    $connection = Database::getConnection();
+
+    $transaction = $connection->startTransaction();
+
+    try {
+      // Database insert 
+      $connection->insert('incident_report')
+        ->fields([
+            'titulo' => $form_state->getValue('titulo'),
+            'descripcion' => $form_state->getValue('descripcion'),
+            'email' => $form_state->getValue('email'),
+            'prioridad' => $form_state->getValue('prioridad'),
+            'user' => $uuid,
+            'created' => $creation_datetime->format('Y-m-d'), // valid format
+          ])
+        ->execute();
+
+        $this->messenger()->addStatus($this->t('¡Gracias por reportar la incidencia!'));
+    }
+    catch (DatabaseConnectionRefusedException $dcre) {
+      $transaction->rollBack();
+      $this->messenger()->addError($this->t('Error. No se puede conectar en estos momentos a la base de datos.' . $dcre->getMessage()));
+    }
+    catch (DatabaseException $de) {
+      $transaction->rollBack();
+      $this->messenger()->addError($this->t('Error. No se ha podido realizar la operación.' . $de->getMessage()));
+    }
+    catch (\Exception $e) {
+      $transaction->rollBack();
+      $this->messenger()->addError($this->t('Ha ocurrido un problema inesperado.'));
+    }
+    
     $form_state->setRedirect('incident_report_form.report_incident');
   }
 

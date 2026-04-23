@@ -1,6 +1,87 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @file
  * Install, update and uninstall functions for the Incident Report Form module.
  */
+
+/**
+ * Implements hook_install().
+ */
+function incident_report_form_install(): void {
+  \Drupal::messenger()->addStatus(t('Module Incident Report Form has been installed.'));
+}
+
+/**
+ * Implements hook_schema().
+ */
+function incident_report_form_schema(): array {
+  $schema['incident_report'] = [
+    'description' => 'Stores incident reports submitted through the form.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary Key: Unique incident report ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'titulo' => [
+        'description' => 'The title of the incident report.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'descripcion' => [
+        'description' => 'The description of the incident report.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'description' => 'The email address of the reporter.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'prioridad' => [
+        'description' => 'The priority level of the incident report.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      // Reference to users table to link the report to a user account
+      'user' => [
+        'description' => 'The user who submitted the incident report.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+      ],
+      'created' => [
+        'description' => 'The timestamp when the incident report was created.',
+        'type' => 'varchar',
+        'mysql_type' => 'date', // specific for mysql databases
+        'length' => 155,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'foreign keys' => [
+        'user_ref' => [
+          'table' => 'users',
+          'columns' => [
+            'user' => 'uuid',
+        ],
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function incident_report_form_uninstall(): void {
+  \Drupal::messenger()->addStatus(t('Module Incident Report Form has been uninstalled.'));
+}
