@@ -22,3 +22,18 @@ function incident_report_form_help($route_name, RouteMatchInterface $route_match
       return '';
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function incident_report_form_theme($existing, $type, $theme, $path) {
+  return [
+    'submissions_list' => [
+      'variables' => [
+        'submissions' => [],
+        'current_user' => NULL,
+      ],
+      'template' => 'submissions-list',
+    ],
+  ];
+}

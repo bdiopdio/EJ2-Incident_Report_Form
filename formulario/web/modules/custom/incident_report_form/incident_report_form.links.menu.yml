@@ -3,3 +3,8 @@ incident_report_form.report_incident:
   route_name: incident_report_form.report_incident
   menu_name: main
   weight: 0
+incident_report_form.list_my_submissions:
+  title: 'Mis Solicitudes'
+  route_name: incident_report_form.view_submissions
+  menu_name: main
+  weight: 1

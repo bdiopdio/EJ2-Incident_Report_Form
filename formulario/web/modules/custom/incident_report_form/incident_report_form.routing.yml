@@ -2,6 +2,14 @@ incident_report_form.report_incident:
   path: '/form/incident-report-form/report-incident'
   defaults:
     _title: 'Incident Report'
-    _form: 'Drupal\incident_report_form\Form\IncidentReportForm'
+    _form: '\Drupal\incident_report_form\Form\IncidentReportForm'
+  requirements:
+    _permission: 'access content'
+
+incident_report_form.view_submissions:
+  path: '/incident-report/my-submissions'
+  defaults:
+    _title: 'View Submissions'
+    _controller: '\Drupal\incident_report_form\Controller\ListSubmissionsController::listSubmissions'
   requirements:
     _permission: 'access content'

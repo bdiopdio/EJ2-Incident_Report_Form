@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Template for displaying a list of a users incident report submissions.
+ *
+ * Available variables:
+ * - submissions: information about the submission
+ * - current_user
+ */
+#}
+{% if no_connection %}
+  <div class="messages messages--error" style="background: #f8d7da; color: #721c24; padding: 20px; margin: 20px 0; border: 1px solid #f5c6cb;">
+    <strong>{{ 'Sin conexión'|t }}:</strong> {{ 'No se pudo establecer conexión con el servidor. Revisa tu conexión a internet.'|t }}
+  </div>
+{% else %}
+  <div>
+    <div>
+      <h1>Mis solicitudes</h1>
+      <p>Consulta y gestiona los incidentes que has reportado hasta el momento</p>
+    </div>
+
+    <div>
+      {% for sub in submissions %}
+        {% if sub.user === current_user %}
+        <div style="display: flex;">
+            <h4>{{ sub.titulo }} <span>{{ sub.create }}</span></h4>
+          <div>
+            <h2 class="pokemon-card-name">{{ pokemon.name }}</h2>
+            <p class="pokemon-card-id">#{{ '%04d'|format(pokemon.id) }}</p>
+          </div>
+        </div>
+        <br>
+      {% endfor %}
+    </div>
+  </div>
+
+    {# <div class="pokemon-pagination">
+      {% if has_previous %}
+        <a href="{{ path('pokeapi_integration.pokemon_list', {'offset': prev_offset}) }}" class="pagination-button">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          Anterior
+        </a>
+      {% else %}
+        <span class="pagination-button disabled">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+          Anterior
+        </span>
+      {% endif %}
+
+      <span class="pagination-info">Página {{ current_page }} de {{ total_pages }}</span>
+
+      {% if has_next %}
+        <a href="{{ path('pokeapi_integration.pokemon_list', {'offset': next_offset}) }}" class="pagination-button">
+          Siguiente
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </a>
+      {% else %}
+        <span class="pagination-button disabled">
+          Siguiente
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </span>
+      {% endif %}
+    </div>
+  </div>
+{% endif %} #}
