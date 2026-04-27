@@ -5,7 +5,7 @@
  *
  * Available variables:
  * - submissions: information about the submission
- * - current_user
+ * - current_user: usuario actualmente logueado en el sitio
  */
 #}
 {% if no_connection %}
@@ -15,59 +15,23 @@
 {% else %}
   <div>
     <div>
-      <h1>Mis solicitudes</h1>
-      <p>Consulta y gestiona los incidentes que has reportado hasta el momento</p>
-    </div>
-
-    <div>
       {% for sub in submissions %}
-        {% if sub.user === current_user %}
-        <div style="display: flex;">
-            <h4>{{ sub.titulo }} <span>{{ sub.create }}</span></h4>
-          <div>
-            <h2 class="pokemon-card-name">{{ pokemon.name }}</h2>
-            <p class="pokemon-card-id">#{{ '%04d'|format(pokemon.id) }}</p>
+        {% if sub.user == current_user %}
+          <div style="display: flex;">
+              <h4>{{ sub.titulo }} | <span style="font-weight: lighter; font-style: italic;">{{ sub.created }}</span></h4>
           </div>
-        </div>
-        <br>
+          <div>
+            <p class="pokemon-card-id"><b>Descripcion:</b> {{ sub.descripcion }}</p>
+            <p class="pokemon-card-id"><b>Prioridad:</b> {{ sub.prioridad }}
+            </p>
+          </div>
+          <hr>
+        {% else %}
+          <div>
+            <p>No hay solicitudes hasta el momento.</p>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
-
-    {# <div class="pokemon-pagination">
-      {% if has_previous %}
-        <a href="{{ path('pokeapi_integration.pokemon_list', {'offset': prev_offset}) }}" class="pagination-button">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-          </svg>
-          Anterior
-        </a>
-      {% else %}
-        <span class="pagination-button disabled">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-          </svg>
-          Anterior
-        </span>
-      {% endif %}
-
-      <span class="pagination-info">Página {{ current_page }} de {{ total_pages }}</span>
-
-      {% if has_next %}
-        <a href="{{ path('pokeapi_integration.pokemon_list', {'offset': next_offset}) }}" class="pagination-button">
-          Siguiente
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-          </svg>
-        </a>
-      {% else %}
-        <span class="pagination-button disabled">
-          Siguiente
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-          </svg>
-        </span>
-      {% endif %}
-    </div>
-  </div>
-{% endif %} #}
+{% endif %}

@@ -1,4 +1,4 @@
 services:
-  incident_report_form.data:
+  incident_report_form.subs_list:
     class: Drupal\incident_report_form\Service\DataService
     arguments: ['@database']

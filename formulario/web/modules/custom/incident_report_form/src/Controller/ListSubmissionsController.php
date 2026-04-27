@@ -12,14 +12,14 @@ use Drupal\incident_report_form\Service\DataService;
 /**
  * Returns responses for Incident Report Form routes.
  */
-final class ListSubmissionsController extends ControllerBase {
+class ListSubmissionsController extends ControllerBase {
 
   /**
    * Instance of DataService service.
    * 
    * @var \Drupal\incident_report_form\Service\DataService
    */
-  protected $data_service;
+  protected $dataService;
 
   /**
    * Constructs a DataService object.
@@ -27,7 +27,7 @@ final class ListSubmissionsController extends ControllerBase {
    * @param \Drupal\incident_report_form\Service\DataService $data_service.
    */
   public function __construct(DataService $data_service) {
-    $this->$data_service = $data_service;
+    $this->dataService = $data_service;
   }
 
   /**
@@ -37,7 +37,7 @@ final class ListSubmissionsController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('incident_report_form.data')
+      $container->get('incident_report_form.subs_list')
     );
   }
 
@@ -45,12 +45,12 @@ final class ListSubmissionsController extends ControllerBase {
    * Builds the response.
    */
   public function listSubmissions() {
-    $subs = $this->data_service->getSubmissions();
+    $subs = $this->dataService->getSubmissions();
     
     return [
       '#theme' => 'submissions_list',
       '#submissions' => $subs,
-      '#current_user' => User::load(\Drupal::currentUser()->id()),
+      '#current_user' => (User::load(\Drupal::currentUser()->id()))->uuid(),
     ];
   }
 
