@@ -39,7 +39,7 @@ class DataService {
       $query = $this->database->select('incident_report', 'ir')
         ->fields('ir', ['titulo', 'descripcion', 'email', 'prioridad', 'user', 'created']);
       
-      return $query->execute()->fetchAll();
+      return $query->execute()->fetchAll(\PDO::FETCH_ASSOC);
     } 
     catch (\Exception $e) {
       // Registramos el error en el log de Drupal (Watchdog)
