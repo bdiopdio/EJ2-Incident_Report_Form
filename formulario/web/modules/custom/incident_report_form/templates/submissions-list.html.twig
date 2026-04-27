@@ -14,11 +14,11 @@
   </div>
 {% else %}
   <div>
-    <div>
+    {% if submissions is not empty %}
       {% for sub in submissions %}
         {% if sub.user == current_user %}
-          <div style="display: flex;">
-              <h4>{{ sub.titulo }} | <span style="font-weight: lighter; font-style: italic;">{{ sub.created }}</span></h4>
+          <div style="display: flex; margin-bottom: -2rem;">
+              <h2>{{ sub.titulo }} <span style="font-size: 20px;font-weight: lighter; font-style: italic;">Submitted on {{ sub.created }}</span></h2>
           </div>
           <div>
             <p class="pokemon-card-id"><b>Descripcion:</b> {{ sub.descripcion }}</p>
@@ -26,12 +26,13 @@
             </p>
           </div>
           <hr>
-        {% else %}
-          <div>
-            <p>No hay solicitudes hasta el momento.</p>
-          </div>
         {% endif %}
       {% endfor %}
+    {% else %}
+      <div>
+        <p>No hay solicitudes hasta el momento.</p>
+      </div>
+    {% endif %}
     </div>
   </div>
 {% endif %}
