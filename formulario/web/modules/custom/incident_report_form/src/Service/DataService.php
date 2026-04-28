@@ -37,6 +37,7 @@ class DataService {
   public function getSubmissions() {
     try {
       $query = $this->database->select('incident_report', 'ir')
+        ->orderBy('created', 'DESC')
         ->fields('ir', ['titulo', 'descripcion', 'email', 'prioridad', 'user', 'created']);
       
       return $query->execute()->fetchAll(\PDO::FETCH_ASSOC);
