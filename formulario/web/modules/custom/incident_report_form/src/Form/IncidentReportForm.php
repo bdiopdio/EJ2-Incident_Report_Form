@@ -164,7 +164,7 @@ final class IncidentReportForm extends FormBase {
       $this->messenger()->addError($this->t('Ha ocurrido un problema inesperado.'));
     }
     
-    $form_state->setRedirect('incident_report_form.report_incident');
+    $form_state->setRedirect('incident_report_form.view_submissions');
   }
 
 }
