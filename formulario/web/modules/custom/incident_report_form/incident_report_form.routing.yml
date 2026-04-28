@@ -4,7 +4,7 @@ incident_report_form.report_incident:
     _title: 'Notificar un problema'
     _form: '\Drupal\incident_report_form\Form\IncidentReportForm'
   requirements:
-    _permission: 'access content'
+    _user_is_logged_in: TRUE
 
 incident_report_form.view_submissions:
   path: '/incident-report/my-submissions'
@@ -12,4 +12,4 @@ incident_report_form.view_submissions:
     _title: 'Mis solicitudes'
     _controller: '\Drupal\incident_report_form\Controller\ListSubmissionsController::listSubmissions'
   requirements:
-    _permission: 'access content'
+    _user_is_logged_in: TRUE
