@@ -51,6 +51,7 @@ class ListSubmissionsController extends ControllerBase {
       '#theme' => 'submissions_list',
       '#submissions' => $subs,
       '#current_user' => (User::load(\Drupal::currentUser()->id()))->uuid(),
+      '#cache' => ['max-age' => 0],
     ];
   }
 
