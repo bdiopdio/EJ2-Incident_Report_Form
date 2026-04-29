@@ -18,7 +18,7 @@
       {% for sub in submissions %}
         {% if sub.user == current_user %}
           <div style="display: flex; margin-bottom: -2rem;">
-              <h2>{{ sub.titulo }} <span style="font-size: 20px;font-weight: lighter; font-style: italic;">Submitted on {{ sub.created }}</span></h2>
+              <h3>{{ sub.titulo }}<span style="font-size: 20px;font-weight: lighter; font-style: italic; color: #1b9ae4;"> &nbsp; Submitted on {{ sub.created }}</span></h3>
           </div>
           <div>
             <p class="pokemon-card-id"><b>Descripcion:</b> {{ sub.descripcion }}</p>
