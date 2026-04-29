@@ -97,4 +97,4 @@ El template utiliza estilos en línea para asegurar una visualización básica c
 Para comprobar el flujo de envío del formulario y la actualización en tiempo real del listado de usuario, consulta el vídeo adjunto:
 
 
-<video src="demo.mp4" width="320" height="240" controls></video>
+![Ver el vídeo aquí](https://github.com/bdiopdio/EJ2-Incident_Report_Form/raw/refs/heads/develop/demo.mp4)
